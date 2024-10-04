@@ -1,6 +1,7 @@
-/** @type {import('next').NextConfig} */
+// remote app next.config.js
 import NextFederationPlugin from '@module-federation/nextjs-mf';
 
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   webpack(config, options) {
     const { isServer } = options;
@@ -8,7 +9,7 @@ const nextConfig = {
       new NextFederationPlugin({
         name: 'next2',
         remotes: {
-          next1: `next1@https://nexthome-delta.vercel.app/_next/static/${
+          next1: `next1@http://localhost:3000/_next/static/${
             isServer ? 'ssr' : 'chunks'
           }/remoteEntry.js`,
         },
@@ -16,17 +17,17 @@ const nextConfig = {
         exposes: {
           './ComponentA': './components/ComponentA.js',
         },
-        shared: {
-          react: {
-            singleton: true,
-            requiredVersion: false,
-          },
-          'react-dom': {
-            singleton: true,
-            requiredVersion: false,
-          },
-        },
-      }),
+        // shared: {
+        //   react: {
+        //     singleton: true,
+        //     requiredVersion: false,
+        //   },
+        //   'react-dom': {
+        //     singleton: true,
+        //     requiredVersion: false,
+        //   },
+        // },
+      })
     );
 
     return config;
